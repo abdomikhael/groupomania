@@ -17,8 +17,8 @@
 			<v-progress-linear v-if ="apiRequest" :indeterminate="true"></v-progress-linear>
 			<v-card-text>
 				<v-form>
-					<v-text-field v-model= "email" name="login" label="Email" type="text"></v-text-field>
-					<v-text-field v-model="password" id="password" name="password" label="Mot de passe" type="password"></v-text-field>
+					<v-text-field v-model= "user.email" name="login" label="Email" type="text"></v-text-field>
+					<v-text-field v-model="user.password" id="password" name="password" label="Mot de passe" type="password"></v-text-field>
 				</v-form>
 			</v-card-text>
 			<v-card-actions>
@@ -36,8 +36,12 @@ import LoginOrSignupLayout from '../Layouts/LoginOrSignupLayout.vue'
 export default {
 	data() {
 		return{
-			email: '',
-			password : '',
+			user :{
+				email: '',
+				password : '',
+
+			},
+			
 			apiRequest:false,
 		}
 	},
@@ -50,6 +54,19 @@ export default {
 		loginUser() {
 
 			this.apiRequest=true;
+			this.$http.post(`http://localhost:3000/users/login/`,  this.user)
+			.then(response => {
+				this.apiRequest=false;
+				console.log('response')
+				this.user = response.data
+				this.$router.push({path: "/", query: this.email})
+
+				
+			})
+			.catch(e => {
+				this.errors.push(e)
+			})
+
 		},
 	}
 };
