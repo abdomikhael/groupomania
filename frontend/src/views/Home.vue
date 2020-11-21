@@ -6,17 +6,18 @@
 
 <script>
 // @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
-import DashboardLayout from '../Layouts/DashboardLayout.vue'
+
+import DefaultLayout from '../Layouts/DefaultLayout.vue'
+import HelloWorld from '../components/HelloWorld.vue'
 
 export default {
 	name: 'Home',
 	components: {
-		HelloWorld,
+		HelloWorld
 
 	},
 	created(){
-		this.$emit(`update:layout`, DashboardLayout)
+		this.$emit(`update:layout`, DefaultLayout)
 	}
 };
 </script>

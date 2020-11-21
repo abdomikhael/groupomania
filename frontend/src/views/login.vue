@@ -37,7 +37,7 @@ export default {
 	data() {
 		return{
 			user :{
-				email: '',
+				email: this.$route.query.email,
 				password : '',
 
 			},
@@ -57,9 +57,8 @@ export default {
 			this.$http.post(`http://localhost:3000/users/login/`,  this.user)
 			.then(response => {
 				this.apiRequest=false;
-				console.log('response')
 				this.user = response.data
-				this.$router.push({path: "/", query: this.email})
+				this.$router.push({path :"/dashbord"})
 
 				
 			})

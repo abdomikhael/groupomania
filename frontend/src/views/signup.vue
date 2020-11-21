@@ -18,30 +18,80 @@
 
 			<v-card-text>
 				<v-form>
-					<v-text-field  v-model ="users.username" name="username" label="Nom d'utilisateur" type="text"></v-text-field>
-					<v-text-field  v-model ="users.email" name="login" label="Email" type="email"></v-text-field>
-					<v-text-field v-model ="users.password" id="password" name="password" label="Mot de passe" type="password"></v-text-field>
-					<v-text-field v-model="users.bio" name="bio" label="Bio" type="text"></v-text-field>
-					<v-checkbox
-					v-model="checkbox"
-					:rules="[v => !!v || 'il faut accepter pour continuer!']"
-					label="j'accepte les régles"
+					<v-text-field  
+					v-model ="users.username"   
 					required
-					></v-checkbox>
-				</v-form>
-				<v-card-actions>
-					<v-spacer></v-spacer>
-					<v-btn color="#f73b3b" dark large @click="createAccount">s'inscrire</v-btn>
-					<v-spacer></v-spacer>
-				</v-card-actions>
-			</v-card-text>	
-		</v-card><br>
-		<p align="center" >Vous avez un compte? <a href="/login#/login">SE CONNECTER </a></p>
-	</v-flex>
+					@input="$v.username.$touch()"
+					@blur="$v.username.$touch()"
+					label="Nom d'utilisateur" 
+					:error-messages="usernameErrors"
+					type="text"></v-text-field>
+					<v-text-field  
+					v-model ="users.email" 
+					name="login" 
+					label="Email" 
+					type="email"
+					required
+					@input="$v.email.$touch()"
+					@blur="$v.email.$touch()"
+					:error-messages="emailErrors">
+					></v-text-field>
+					<v-text-field 
+					v-model ="users.password" 
+					id="password"
+					label="Mot de passe" 
+					type="password"
+					required
+					@input="$v.password.$touch()"
+					@blur="$v.password.$touch()"
+					:error-messages="passwordErrors">
+
+				</v-text-field>
+				<v-text-field 
+				v-model="users.bio" 
+				name="bio" 
+				label="Bio" 
+				type="text">
+			</v-text-field>
+			<v-checkbox
+			v-model="userAgreement"
+			label="j'accepte les régles"
+			required
+			@input="$v.userAgreementuserAgreement.$touch()"
+			@blur="$v.userAgreement.$touch()"
+			:error-messages="userAgreementErrors"
+
+			></v-checkbox>
+		</v-form>
+		<v-card-actions>
+			<v-spacer></v-spacer>
+			<v-btn color="#f73b3b" dark large @click="createAccount">s'inscrire</v-btn>
+			<v-spacer></v-spacer>
+		</v-card-actions>
+	</v-card-text>	
+</v-card><br>
+<p align="center" >Vous avez un compte? <a href="/login#/login">SE CONNECTER </a></p>
+</v-flex>
 </template>
 <script>
 import LoginOrSignupLayout from '../Layouts/LoginOrSignupLayout.vue'
+import { required } from 'vuelidate/lib/validators'
+
 export default {
+	validations: {
+		username: {required},
+		password:{required},
+		email : {required},
+		userAgreement :{
+			checked (val) {
+				return val
+			}
+		},
+	},
+
+
+	
+
 	data() {
 		return{
 			users :{
@@ -51,19 +101,54 @@ export default {
 				password : null,
 			},
 			
-			checkbox : true,
+			userAgreement : false,
 			apiRequest:false,
 		}
 	},
 	created() {
 		this.$emit(`update:layout`, LoginOrSignupLayout)
 	},
+
+	
+
+
+
+	computed:{
+		usernameErrors () {
+			const errors = []
+			if (!this.$v.username.$dirty) return errors
+				!this.$v.username.required && errors.push('Nom est obligatoire.')
+			return errors
+		},
+		passwordErrors () {
+			const errors = []
+			if (!this.$v.password.$dirty) return errors
+				!this.$v.password.required && errors.push('Mot de passe est obligatoire.')
+			return errors
+		},
+		emailErrors () {
+			const errors = []
+			if (!this.$v.email.$dirty) return errors
+				!this.$v.email.required && errors.push('E-mail est obligatoire.')
+			return errors
+
+		},
+		userAgreementErrors() {
+			const errors = []
+			if (!this.$v.userAgreement.$dirty) return errors
+				!this.$v.userAgreement.checked && errors.push('Cacher la case pour continuer!')
+			return errors
+		}
+
+
+	},
+
 	methods:{
-		
 
-		async createAccount() {
-			this.apiRequest=true;
 
+		createAccount () {
+			this.$v.$touch();
+			this.apiRequest=true
 			this.$http.post(`http://localhost:3000/users/signup/`,  this.users)
 			.then(response => {
 				this.apiRequest=false;
@@ -71,7 +156,7 @@ export default {
 				this.users = response.data
 				this.$router.push({path: "/login", query: this.email})
 
-				
+
 			})
 			.catch(e => {
 				this.errors.push(e)
@@ -79,7 +164,8 @@ export default {
 
 
 
-		},
+		}
 	}
-};
+}
+
 </script>

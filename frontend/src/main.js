@@ -6,7 +6,10 @@ import 'roboto-fontface/css/roboto/roboto-fontface.css'
 import '@mdi/font/css/materialdesignicons.css'
 import 'material-design-icons-iconfont'
 import axios from 'axios'
+import Vuelidate from 'vuelidate'
 
+
+Vue.use(Vuelidate)
 Vue.prototype.$http = axios
 Vue.config.productionTip = false
 Vue.use(vuetify);
