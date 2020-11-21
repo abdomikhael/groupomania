@@ -1,5 +1,4 @@
-const Post = require('../models/posts');
-
+const models = require('../models');
 const fs = require('fs');
 
 exports.getAllPosts = (req, res, next) => {

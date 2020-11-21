@@ -1,47 +1,33 @@
 /* jshint indent: 2 */
 
 const Sequelize = require('sequelize');
-module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('users', {
+module.exports = function(sequelize) {
+  const User = sequelize.define('User', {
     id: {
       autoIncrement: true,
-      type: DataTypes.SMALLINT,
+      type: Sequelize.SMALLINT,
       allowNull: false,
       primaryKey: true
     },
     username: {
-      type: DataTypes.STRING(32),
+      type: Sequelize.STRING(32),
       allowNull: false
     },
     email: {
-      type: DataTypes.STRING(255),
+      type: Sequelize.STRING(255),
       allowNull: false
     },
     password: {
-      type: DataTypes.STRING(255),
+      type: Sequelize.STRING(255),
       allowNull: false
     },
     bio: {
-      type: DataTypes.TEXT,
-      allowNull: false
+      type: Sequelize.TEXT,
+      allowNull: true
     },
-    joined: {
-      type: DataTypes.STRING(255),
-      allowNull: false
-    }
-  }, {
-    sequelize,
-    tableName: 'users',
-    timestamps: false,
-    indexes: [
-      {
-        name: "PRIMARY",
-        unique: true,
-        using: "BTREE",
-        fields: [
-          { name: "id" },
-        ]
-      },
-    ]
-  });
+  },{});
+  User.associate= function(models){
+    models.User.hasMany(models.Post)
+  };
+  return User;
 };

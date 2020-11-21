@@ -1,47 +1,35 @@
 /* jshint indent: 2 */
 
 const Sequelize = require('sequelize');
-module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('posts', {
+module.exports = function(sequelize) {
+  const Post= sequelize.define('Post', {
     post_id: {
       autoIncrement: true,
-      type: DataTypes.SMALLINT,
+      type: Sequelize.SMALLINT,
       allowNull: false,
       primaryKey: true
     },
-    user: {
-      type: DataTypes.SMALLINT,
-      allowNull: false
+    fk_user: {
+      type: Sequelize.SMALLINT,
+      allowNull: false,
+      references: {
+        model: 'users',
+        key: 'id'
+      }
     },
     username: {
-      type: DataTypes.STRING(255),
+      type: Sequelize.STRING(255),
       allowNull: false
     },
     title: {
-      type: DataTypes.STRING(255),
+      type: Sequelize.STRING(255),
       allowNull: false
     },
     content: {
-      type: DataTypes.TEXT,
+      type: Sequelize.TEXT,
       allowNull: false
     },
-    post_created: {
-      type: DataTypes.DATE,
-      allowNull: false
-    }
-  }, {
-    sequelize,
-    tableName: 'posts',
-    timestamps: false,
-    indexes: [
-      {
-        name: "PRIMARY",
-        unique: true,
-        using: "BTREE",
-        fields: [
-          { name: "post_id" },
-        ]
-      },
-    ]
-  });
+    
+  }, {});
+  return Post;
 };
