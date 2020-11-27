@@ -58,7 +58,7 @@ export default {
 			.then(response => {
 				this.apiRequest=false;
 				this.user = response.data
-				this.$router.push({path :"/dashbord"})
+				this.$router.push({path :"/Posts"})
 
 				
 			})
