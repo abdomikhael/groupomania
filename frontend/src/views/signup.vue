@@ -23,13 +23,13 @@
 					required
 					@input="$v.username.$touch()"
 					@blur="$v.username.$touch()"
-					label="Nom d'utilisateur" 
+					label="Nom d'utilisateur*" 
 					:error-messages="usernameErrors"
 					type="text"></v-text-field>
 					<v-text-field  
 					v-model ="users.email" 
 					name="login" 
-					label="Email" 
+					label="Email*" 
 					type="email"
 					required
 					@input="$v.email.$touch()"
@@ -39,7 +39,7 @@
 					<v-text-field 
 					v-model ="users.password" 
 					id="password"
-					label="Mot de passe" 
+					label="Mot de passe*" 
 					type="password"
 					required
 					@input="$v.password.$touch()"
@@ -70,7 +70,7 @@
 		</v-card-actions>
 	</v-card-text>	
 </v-card><br>
-<p align="center" >Vous avez un compte? <a href="/login#/login">SE CONNECTER </a></p>
+<p align="center" >Vous avez un compte? <a href="/login">SE CONNECTER </a></p>
 </v-flex>
 </template>
 <script>
@@ -103,6 +103,7 @@ export default {
 			
 			userAgreement : false,
 			apiRequest:false,
+			errors :"",
 		}
 	},
 	created() {
@@ -149,23 +150,22 @@ export default {
 		createAccount () {
 			this.$v.$touch();
 			this.apiRequest=true
-			this.$http.post(`http://localhost:3000/users/signup/`,  this.users)
+			this.$http.post(`http://localhost:3000/signup/`,  this.users)
 			.then(response => {
+				
+				this.$emit("login", response.data)
 				this.apiRequest=false;
-				console.log('response')
-				this.users = response.data
-				this.$router.push({path: "/login", query: this.email})
+				this.$router.push({path: "/Posts", query: this.email})
+			
+				
 
 
 			})
-			.catch(e => {
-				this.errors.push(e)
-			})
-
+			
 
 
 		}
 	}
-}
+};
 
 </script>

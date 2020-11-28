@@ -22,7 +22,7 @@
         <v-icon>mdi-account</v-icon>
       </v-btn>
 
-      <v-btn @click  ="logout" icon>
+      <v-btn @click="$router.push({path: '/logout'})" icon>
         <v-icon>mdi-logout</v-icon>
       </v-btn>
     </v-toolbar>
@@ -34,7 +34,7 @@
 
       <v-card-text  >
         <v-text-field
-       
+
         placeholder="Le titre"
         v-model ="posts.title"
         ></v-text-field>
@@ -86,24 +86,31 @@
 <script>
 
 export default {
-  name: 'wall',
+  name: 'Posts',
 
-
+  props:["token"],
   data() {
     return{
       posts:{
+        fk_user: localStorage.getItem("userId"),
         title : null,
         content :null
       },
       user :"",
 
     }
-  },                                 
+  },
+
   methods:{
+
     sendPost () {
 
-
-     this.$http.post(`http://localhost:3000/auth/createPost/`, this.posts)
+      console.log(this.posts)
+      this.$http.post(`http://localhost:3000/posts`, this.posts, {
+        headers:{
+          Authorization: "Bearer "+ this.token
+        }
+      })
      .then(response=> {
       console.log("response")
       this.posts = response.data
@@ -114,10 +121,6 @@ export default {
     })
    }
  },
- async logout (){
-        await this.$store.dispatch('LogOut')
-        this.$router.push('/login')
-      }
 };
 
 </script>

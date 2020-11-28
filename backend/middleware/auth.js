@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 // fonctionnalités d'authorization de manipulez les data si on a le bon userId et password
 
 module.exports = (req, res, next) => {
-  try {
+ // try {
     // la constant jwt de la TOKEN
     const token = req.headers.authorization.split(' ')[1];
     // constant pour utiliser la fonction verify pour décoder le token extrayer l'ID
@@ -15,9 +15,9 @@ module.exports = (req, res, next) => {
     } else {
       next();
     }
-  } catch {
-    res.status(401).json({
-      error: new Error('Invalid request!')
-    });
-  }
+  //} catch {
+    //res.status(401).json({
+      //error: new Error('Invalid request!')
+   // });
+  //}
 };

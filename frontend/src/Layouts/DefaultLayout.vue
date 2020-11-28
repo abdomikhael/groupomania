@@ -4,7 +4,7 @@
 			<v-spacer></v-spacer>
 			<v-btn text to ="/" color ="#f73b3b" dark>Groupomania</v-btn>
 			<v-btn text to ="/login" color ="#f73b3b" dark>SE CONNECTER</v-btn>
-			<v-btn text to ="/register" color ="#f73b3b" dark>S'INSCRIRE</v-btn>
+			<v-btn text to ="/signup" color ="#f73b3b" dark>S'INSCRIRE</v-btn>
 		</v-toolbar-items>
 		<v-main>
 			<slot/>

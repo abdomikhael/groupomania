@@ -1,25 +1,43 @@
 <template>
- <v-app name="app">
-  <components :is ="layout">
-   <router-view :layout.sync="layout"/>
-  </components>
- </v-app>
+	<v-app name="app">
+		<components :is ="layout">
+			<router-view :layout.sync="layout" :token="token" @login="loggedIn" @logout="loggedOut"/>
+		</components>
+	</v-app>
 </template>
 
 <script>
 
 export default {
- name: 'app',
+	name: 'app',
 
- components: {
+	components: {
 
 
- },
+	},
 
- data() {
+	data() {
 
-   return {
-     layout:`div`,    }
-   },
-};
-</script>
+		return {
+			layout:`div`,  
+			token: ""  }
+		},
+		created() {
+			this.token =localStorage.getItem("token") || "";
+		},
+		methods:{
+			loggedIn(data){
+
+				this.token = data.token
+				localStorage.setItem("token", data.token);
+				localStorage.setItem("userId", data.userId)
+			},
+			loggedOut(){
+				this.token = ''
+				localStorage.setItem("token", "");
+				localStorage.setItem("userId","")
+
+			}
+		}
+	};
+	</script>

@@ -32,10 +32,11 @@ exports.getOnePost = (req, res, next) => {
 };
 
 exports.createPost = (req, res, next) => {
-  const postObject = JSON.parse(req.body.posts);
-  delete postObject._id;
 
-  const post = new ({
+  const postObject = req.body;
+
+
+  const post = new models.Post ({
     ...postObject,
   
   });

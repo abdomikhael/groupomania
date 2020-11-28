@@ -21,14 +21,16 @@
 					<v-text-field v-model="user.password" id="password" name="password" label="Mot de passe" type="password"></v-text-field>
 				</v-form>
 			</v-card-text>
+
 			<v-card-actions>
 				<v-spacer></v-spacer>
 				<v-btn color="#f73b3b" dark large @click= "loginUser">se connecter</v-btn>
 				<v-spacer></v-spacer>
 			</v-card-actions>
+			<p v-if="showError" id="error" align="center" class="red--text">E-mail ou mot de passe sont incorrects</p>
 		</v-card>
 		<br>
-		<p align="center">vous n'avez pas un compte? <a href="/signup#/signup">Créer un compte </a></p>
+		<p align="center">vous n'avez pas un compte? <a href="/signup">Créer un compte </a></p>
 	</v-flex>
 </template>
 <script>
@@ -41,10 +43,15 @@ export default {
 				password : '',
 
 			},
-			
+			showError: false,
 			apiRequest:false,
+			errors :"",
+
+
 		}
-	},
+	}, 
+	
+
 
 	created(){
 		this.$emit(`update:layout`, LoginOrSignupLayout)
@@ -54,19 +61,28 @@ export default {
 		loginUser() {
 
 			this.apiRequest=true;
-			this.$http.post(`http://localhost:3000/users/login/`,  this.user)
+			this.$http.post(`http://localhost:3000/login/`,  this.user)
 			.then(response => {
 				this.apiRequest=false;
-				this.user = response.data
+				console.log(response.data)
+				this.$emit ("login", response.data)
 				this.$router.push({path :"/Posts"})
-
 				
 			})
 			.catch(e => {
 				this.errors.push(e)
+				this.showError = true 	
 			})
 
+			
+
+
+			
 		},
+
+
+
+		
 	}
 };
 </script>

@@ -3,7 +3,7 @@
 const Sequelize = require('sequelize');
 module.exports = function(sequelize) {
   const Post= sequelize.define('Post', {
-    post_id: {
+    id: {
       autoIncrement: true,
       type: Sequelize.SMALLINT,
       allowNull: false,
@@ -17,10 +17,7 @@ module.exports = function(sequelize) {
         key: 'id'
       }
     },
-    username: {
-      type: Sequelize.STRING(255),
-      allowNull: false
-    },
+   
     title: {
       type: Sequelize.STRING(255),
       allowNull: false
