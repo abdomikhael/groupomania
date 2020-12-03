@@ -17,56 +17,67 @@
 			<v-progress-linear v-if ="apiRequest" :indeterminate="true"></v-progress-linear>
 
 			<v-card-text>
-				<v-form>
-					<v-text-field  
-					v-model ="users.username"   
-					required
-					@input="$v.username.$touch()"
-					@blur="$v.username.$touch()"
-					label="Nom d'utilisateur*" 
-					:error-messages="usernameErrors"
-					type="text"></v-text-field>
-					<v-text-field  
-					v-model ="users.email" 
-					name="login" 
-					label="Email*" 
-					type="email"
-					required
-					@input="$v.email.$touch()"
-					@blur="$v.email.$touch()"
-					:error-messages="emailErrors">
-					></v-text-field>
-					<v-text-field 
-					v-model ="users.password" 
-					id="password"
-					label="Mot de passe*" 
-					type="password"
-					required
-					@input="$v.password.$touch()"
-					@blur="$v.password.$touch()"
-					:error-messages="passwordErrors">
+				<v-form
+				ref="form"
+				v-model="valid"
+				lazy-validation>
+				<v-text-field  
+				v-model ="users.username"   
+				required
+				:rules="nameRules"
+				:counter="15"
+				label="Nom d'utilisateur*" 
+				type="text"
 
-				</v-text-field>
+				></v-text-field>
+				<v-text-field  
+				v-model ="users.email" 
+				name="login" 
+				label="Email*" 
+				type="email"
+				required
+				:rules="emailRules"
+				>
+				></v-text-field>
+				<v-text-field 
+				v-model ="users.password" 
+				id="password"
+				label="Mot de passe*" 
+				type="password"
+				required
+				:rules="passwordRules"
+				></v-text-field>
 				<v-text-field 
 				v-model="users.bio" 
 				name="bio" 
 				label="Bio" 
-				type="text">
-			</v-text-field>
-			<v-checkbox
-			v-model="userAgreement"
-			label="j'accepte les régles"
-			required
-			@input="$v.userAgreementuserAgreement.$touch()"
-			@blur="$v.userAgreement.$touch()"
-			:error-messages="userAgreementErrors"
+				type="text"
+				></v-text-field>
+				
+				<v-checkbox
+				v-model="userAgreement"
+				label="j'accepte les régles"
+				required
+				:rules="[(v) => !!v || 'La case doit être couchéé']"
 
-			></v-checkbox>
-		</v-form>
-		<v-card-actions>
-			<v-spacer></v-spacer>
-			<v-btn color="#f73b3b" dark large @click="createAccount">s'inscrire</v-btn>
-			<v-spacer></v-spacer>
+
+				></v-checkbox>
+			</v-form>
+			<v-card-actions>
+				<v-spacer></v-spacer>
+				<v-btn color="#f73b3b" 
+				dark large 
+				:disabled="!valid" 
+				@click="createAccount"
+				>s'inscrire</v-btn>
+
+				<v-btn
+				color="warning"
+				@click="reset"
+				large
+				>Réinitialiser</v-btn>
+
+				
 		</v-card-actions>
 	</v-card-text>	
 </v-card><br>
@@ -75,32 +86,32 @@
 </template>
 <script>
 import LoginOrSignupLayout from '../Layouts/LoginOrSignupLayout.vue'
-import { required } from 'vuelidate/lib/validators'
+
 
 export default {
-	validations: {
-		username: {required},
-		password:{required},
-		email : {required},
-		userAgreement :{
-			checked (val) {
-				return val
-			}
-		},
-	},
-
-
 	
-
 	data() {
 		return{
+			valid: true,
 			users :{
 				username : null,
 				email: null,
 				bio : null,
 				password : null,
 			},
-			
+			nameRules: [
+			v => !!v || "Nom d'utilisateur est obligatoire",
+			v => (v && v.length <= 10) || "Nom d'utilisateur doit avoir maximum de 15 character"
+			],
+			emailRules: [
+			v => !!v || 'E-mail est obligatoire',
+			v => /.+@.+/.test(v) || 'E-mail doit être valid'
+			],
+			passwordRules: [
+			v => !!v || 'Mot de passe est obligatoire',
+			v => (v && v.length >= 10) || 'Mot de passe doit avoir au minimum 10 character'
+			],
+
 			userAgreement : false,
 			apiRequest:false,
 			errors :"",
@@ -110,60 +121,26 @@ export default {
 		this.$emit(`update:layout`, LoginOrSignupLayout)
 	},
 
-	
-
-
-
-	computed:{
-		usernameErrors () {
-			const errors = []
-			if (!this.$v.username.$dirty) return errors
-				!this.$v.username.required && errors.push('Nom est obligatoire.')
-			return errors
-		},
-		passwordErrors () {
-			const errors = []
-			if (!this.$v.password.$dirty) return errors
-				!this.$v.password.required && errors.push('Mot de passe est obligatoire.')
-			return errors
-		},
-		emailErrors () {
-			const errors = []
-			if (!this.$v.email.$dirty) return errors
-				!this.$v.email.required && errors.push('E-mail est obligatoire.')
-			return errors
-
-		},
-		userAgreementErrors() {
-			const errors = []
-			if (!this.$v.userAgreement.$dirty) return errors
-				!this.$v.userAgreement.checked && errors.push('Cacher la case pour continuer!')
-			return errors
-		}
-
-
-	},
-
 	methods:{
+		reset () {
+			this.$refs.form.reset()
+		},
+		
 
 
 		createAccount () {
-			this.$v.$touch();
-			this.apiRequest=true
-			this.$http.post(`http://localhost:3000/signup/`,  this.users)
-			.then(response => {
-				
-				this.$emit("login", response.data)
-				this.apiRequest=false;
-				this.$router.push({path: "/Posts", query: this.email})
-			
-				
+			if (this.$refs.form.validate()) {
+				this.snackbar = true
+				this.apiRequest=true
+				this.$http.post(`http://localhost:3000/signup/`,  this.users)
+				.then(response => {
 
+					this.$emit("login", response.data)
+					this.apiRequest=false;
+					this.$router.push({path: "/Posts", query: this.email})
 
-			})
-			
-
-
+				})
+			}
 		}
 	}
 };

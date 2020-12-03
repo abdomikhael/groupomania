@@ -1,7 +1,6 @@
 <template>
-  <v-container background-color="#f73b3b">
-
-    <v-card class="mt-0">
+  <v-container>
+   <v-card class="mt-0">
       <v-toolbar  fluid color ="#f73b3b"  dark class="my-4 mt-0">
        <v-img
        :src="require('../assets/icon.svg')"
@@ -28,99 +27,77 @@
     </v-toolbar>
   </v-card>
 
+  <v-main >  
+  <router-link to ="/addPost"><v-text-field label="Partager votre publication"></v-text-field></router-link>   
+    <div class="post" v-for="(post, index) in posts" :key="index" >
 
-  <v-main background-color ="#f73b3b">     
-    <v-card >
+      <v-card  @click="editPost()"
 
-      <v-card-text  >
-        <v-text-field
+      class=" mt-3" >
+      <v-card-text >
+        <h3 class=" font-weight-light"> 
 
-        placeholder="Le titre"
-        v-model ="posts.title"
-        ></v-text-field>
-        <v-textarea
-        color ="#f73b3b" 
-        placeholder="La publication"
-        v-model ="posts.content"
-        ></v-textarea>
+        {{post.title}}</h3>
+
+
+        <p  class="font-weight-regular">   
+        {{post.content}}</p>
+
       </v-card-text>
-      <v-card-actions color ="#f73b3b" >
-        <v-spacer></v-spacer>
-        <v-btn
-        color="success"
-        @click="sendPost">
-        Publier
-      </v-btn>
-    </v-card-actions>
-  </v-card>
-  <v-divider class="my-2"></v-divider>
-  <v-card
-  class="mx-auto"
-  >
-  <v-card-text>
-    <v-text-field
-    filled
-    value="My new post"
-    ></v-text-field>
-    <v-textarea
-    filled
-    value="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse"
-    ></v-textarea>
-  </v-card-text>
-  <v-card-actions>
-    <v-list-item class="grow">
-      <v-list-item-content>
-        <v-list-item-title>Evan You</v-list-item-title>
-      </v-list-item-content>
-      <v-row
-      align="center"
-      justify="end">
-    </v-row>
-  </v-list-item>
-</v-card-actions>
-</v-card>
-
+    </v-card>
+  </div>
 </v-main>
 </v-container>
 </template>
 <script>
 
 export default {
-  name: 'Posts',
-
+  name: 'posts',
   props:["token"],
-  data() {
-    return{
-      posts:{
-        fk_user: localStorage.getItem("userId"),
-        title : null,
-        content :null
-      },
-      user :"",
 
+
+  data () {
+    return{
+      posts : {
+       type: Object,
+       require: true
+     },
+
+
+      
     }
   },
+  mounted (){
+    this.$http.get(`http://localhost:3000/posts`,{
+      headers:{
+        Authorization: "Bearer "+ this.token
+      }
+    })
+    .then(response=> {
+      this.posts=  response.data})
+
+
+
+    .catch((e) => {
+      console.log(e);
+    });
+
+
+
+  },  
 
   methods:{
 
-    sendPost () {
 
-      console.log(this.posts)
-      this.$http.post(`http://localhost:3000/posts`, this.posts, {
-        headers:{
-          Authorization: "Bearer "+ this.token
-        }
-      })
-     .then(response=> {
-      console.log("response")
-      this.posts = response.data
-      .catch(
-        console.log("error")
-        )
+    editPost (){
 
-    })
-   }
- },
+      this.$router.push ({ path: '/post/' , query : this.id});
+    }
+
+
+    
+  }   
+
 };
 
 </script>

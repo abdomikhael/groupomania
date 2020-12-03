@@ -1,7 +1,7 @@
 <template>
 	<v-app name="app">
 		<components :is ="layout">
-			<router-view :layout.sync="layout" :token="token" @login="loggedIn" @logout="loggedOut"/>
+			<router-view :layout.sync="layout" :token="token" @login="loggedIn" @signup="loggedIn" @logout="loggedOut"/>
 		</components>
 	</v-app>
 </template>

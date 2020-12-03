@@ -26,6 +26,9 @@ module.exports = function(sequelize) {
       type: Sequelize.TEXT,
       allowNull: false
     },
+    UserId: {
+      type : Sequelize.SMALLINT,
+    }
     
   }, {});
   return Post;

@@ -13,6 +13,7 @@ Vue.use(Vuelidate)
 Vue.prototype.$http = axios
 Vue.config.productionTip = false
 Vue.use(vuetify);
+
 new Vue({
   router,
   vuetify,

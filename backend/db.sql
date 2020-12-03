@@ -13,9 +13,8 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB;
 
 CREATE TABLE `posts` (
-  post_id SMALLINT NOT NULL AUTO_INCREMENT,
+  id SMALLINT NOT NULL AUTO_INCREMENT,
   fk_user SMALLINT NOT NULL,
-  username varchar(255) NOT NULL,
   title varchar(255) NOT NULL,
   content text NOT NULL,
   post_created DATETIME NOT NULL,

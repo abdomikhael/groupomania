@@ -5,5 +5,5 @@ export default {
 		this.$emit("logout")
 		this.$router.push({path : "/"})
 	}
-}
+};
 </script>

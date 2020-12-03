@@ -66,7 +66,7 @@ export default {
 				this.apiRequest=false;
 				console.log(response.data)
 				this.$emit ("login", response.data)
-				this.$router.push({path :"/Posts"})
+				this.$router.push({path :"/posts"})
 				
 			})
 			.catch(e => {

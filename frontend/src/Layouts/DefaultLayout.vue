@@ -1,11 +1,22 @@
 <template>
 	<div>
-		<v-toolbar-items class="hidden-sm-and-down">
-			<v-spacer></v-spacer>
-			<v-btn text to ="/" color ="#f73b3b" dark>Groupomania</v-btn>
-			<v-btn text to ="/login" color ="#f73b3b" dark>SE CONNECTER</v-btn>
-			<v-btn text to ="/signup" color ="#f73b3b" dark>S'INSCRIRE</v-btn>
-		</v-toolbar-items>
+		<v-toolbar  fluid color ="#f73b3b"  dark class="my-4 mt-0">
+			
+				<v-img
+				:src="require('../assets/icon.svg')"
+				class="my-4"
+				contain
+				height="65"
+				/>
+
+				<v-toolbar-title>Groupomania</v-toolbar-title>
+
+				<v-spacer></v-spacer>
+				<v-btn text to ="/" dark>Groupomania</v-btn>
+				<v-btn text to ="/login" dark>SE CONNECTER</v-btn>
+				<v-btn text to ="/signup"  dark>S'INSCRIRE</v-btn>
+		
+		</v-toolbar>
 		<v-main>
 			<slot/>
 		</v-main>
