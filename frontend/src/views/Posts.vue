@@ -31,7 +31,7 @@
   <router-link to ="/addPost"><v-text-field label="Partager votre publication"></v-text-field></router-link>   
     <div class="post" v-for="(post, index) in posts" :key="index" >
 
-      <v-card  @click="editPost()"
+      <v-card  @click="$router.push({ path: '/post/'+post.id})"
 
       class=" mt-3" >
       <v-card-text >
@@ -89,10 +89,7 @@ export default {
   methods:{
 
 
-    editPost (){
-
-      this.$router.push ({ path: '/post/' , query : this.id});
-    }
+    
 
 
     

@@ -1,37 +1,45 @@
 <template>
-  <div v-if="currentPost" class="edit-form py-3" >
-    <p class="headline">Modifier votre publication</p>
-    <v-form ref="form" lazy-validation>
-      <v-text-field
-      v-model="currentPost.title"
-      :rules="[(v) => !!v || 'Titre est obligatoire.']"
-      label="Titre"
-      required
-      >{{id}}</v-text-field>
+  <v-container fluid  class="mt-15" >
+   <div v-if="currentPost" class="edit-form py-3" >
+    <v-card>
+      <v-card-title>
+        <p class="headline">Modifier votre publication</p>
+      </v-card-title>
+      <v-form ref="form" lazy-validation>
+       <v-card-text>
+        <v-text-field
+        v-model="currentPost.title"
+        :rules="[(v) => !!v || 'Titre est obligatoire.']"
+        label="Titre"
+        required
+        >{{id}}</v-text-field>
 
-      <v-text-field
-      v-model="currentPost.content"
-      :rules="[(v) => !!v || 'content est obligatoire']"
-      label="Description"
-      required
-      ></v-text-field>
-
-
-      <v-btn color="error" small class="mr-2" @click="deletePost">
+        <v-textarea
+        v-model="currentPost.content"
+        :rules="[(v) => !!v || 'content est obligatoire']"
+        label="Description"
+        required
+        ></v-textarea>
+      </v-card-text>
+      <v-card-actions>
+       <v-spacer></v-spacer>
+       <v-btn color="error" small class="mr-2" @click="deletePost">
         Supprimer
       </v-btn>
-
       <v-btn color="success" small @click="updatePost">
         Modifier
       </v-btn>
-    </v-form>
-
-    <p class="mt-3">{{ message }}</p>
-  </div>
-
-  <div v-else>
+    </v-card-actions>
+  </v-form>
+  <p class="mt-3">{{ message }}</p>  
+</v-card>
+</div>
+<div v-else>
+  <v-card>
     <p>Veuiller choisir un post...</p>
-  </div>
+  </v-card>
+</div>
+</v-container>
 </template>
 <script>
 export default {
@@ -46,7 +54,6 @@ export default {
         type: Boolean,
         required: true,
       },
-       id:this.$route.params.id,
 
       message: "",
       fk_user: localStorage.getItem("userId"),
@@ -57,8 +64,8 @@ export default {
 
   },
   mounted() {  
-
-    this.$http.get(`http://localhost:3000/posts/:id`,
+    let  id= this.$route.params.id;
+    this.$http.get(`http://localhost:3000/posts/`+id,
     {
       headers:{
         Authorization: "Bearer "+ this.token
