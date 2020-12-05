@@ -15,11 +15,11 @@ exports.getAllPosts = (req, res, next) => {
 };
 
 exports.getOnePost = (req, res, next) => {
-   const id = req.params.id;
- 
-   models.Post.findByPk(id)
-   .then(posts => {res.status(200).json(posts)
-    })
+ const id = req.params.id;
+
+ models.Post.findByPk(id)
+ .then(posts => {res.status(200).json(posts)
+ })
  .catch(  
   (error) => {
     res.status(404).json({
@@ -43,41 +43,32 @@ exports.createPost = (req, res, next) => {
 };
 
 exports.modifyPost = (req, res, next) => {
-  const postObject = req.file ?
-  {
-    ...JSON.parse(req.body.posts),
+  const id = req.params.id;
+  const postObject = req.body;
+   delete postObject.createdAt;
+  const post = new models.Post ({
+    ...postObject,
 
-  } : { ...req.body };
-  if(!req.body.errorMessage) {
-    models.Post.updateOne({ _id: req.params.id }, { ...postObject, _id: req.params.id })
-    .then(() => {
-      if(!req.file) {
-        res.status(200).json({ message: "Le post a bien été modifiée!"})
-      } else {
-        next();
-      }
-    })
-    .catch(error => { 
-      if(error.message.indexOf("duplicate key")>0) {
-        req.body.errorMessage = "Le post existe déjà!";
-      }
-      next();
-    })
-  } else {
-    next();
+  });
+  if (!req.body) {
+    res.status(400).send({
+      message: "Content can not be empty!"
+    }); 
   }
+  
+  post.update(id)
+  .then(() => res.status(201).json({ message: 'Post enregistré !'}))
+  .catch(error => res.status(400).json({ error }));
+  
 };
 
 exports.deletePost = (req, res, next) => {
-  models.Post.findOne({ _id: req.params.id })
-  .then(post => {
+    const id = req.params.id;
+    const postObject = req.body;
+    post = models.Post
+    post.deleteOne(id)
+    .then(() => res.status(201).json({ message: 'Post supprimé !'}))
+  .catch(error => res.status(400).json({ error }));
 
-
-    Post.deleteOne({ _id: req.params.id })
-    .then(() => res.status(200).json({ message: 'Le post a bien été supprimée !'}))
-    .catch(error => res.status(400).json({ error }));
-
-  })
-  .catch(error => res.status(500).json({ error }));
 };
 

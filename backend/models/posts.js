@@ -7,7 +7,8 @@ module.exports = function(sequelize) {
       autoIncrement: true,
       type: Sequelize.SMALLINT,
       allowNull: false,
-      primaryKey: true
+      primaryKey: true,
+   
     },
     fk_user: {
       type: Sequelize.SMALLINT,

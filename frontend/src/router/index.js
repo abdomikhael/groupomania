@@ -7,6 +7,7 @@ import posts from '../views/Posts.vue'
 import Logout from '../views/logOut.vue'
 import postDetails from '../components/postDetails.vue'
 import addPost from '../components/addPost.vue'
+import profile from '../components/profile.vue'
 
 
 Vue.use(VueRouter)
@@ -48,12 +49,15 @@ const routes = [
 },
 { 
   
-    
-
   path: '/post/:id',
   name: 'postDetails',
   component :postDetails
    
+},
+{
+  path: '/profile/:id',
+  name: 'profile',
+  component :profile
 },
 
 

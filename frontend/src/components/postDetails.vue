@@ -12,7 +12,7 @@
         :rules="[(v) => !!v || 'Titre est obligatoire.']"
         label="Titre"
         required
-        >{{id}}</v-text-field>
+        ></v-text-field>
 
         <v-textarea
         v-model="currentPost.content"
@@ -53,10 +53,11 @@ export default {
       currentPost:{
         type: Boolean,
         required: true,
+        fk_user: localStorage.getItem("userId"),
       },
 
       message: "",
-      fk_user: localStorage.getItem("userId"),
+
 
 
 
@@ -79,9 +80,46 @@ export default {
       console.log(e);
     })
   },
+  methods:{
+    updatePost() {
+      let  id = this.$route.params.id;
+      this.$http.put(`http://localhost:3000/posts/`+id, this.currentPost, {
+        headers:{
+          Authorization: "Bearer "+ this.token
+        }
+      })
+      .then(response=> {
+        console.log("response")
+        this.currentPostCard = response.data
+        this.message ="le Post est modifié"
+       // this.$router.push({path: "/Posts"})
+     })
+      .catch(
+        console.log("error")
+        )
+    },
 
 
+    deletePost() {
 
+      let  id = this.$route.params.id;
+      this.$http.delete('http://localhost:3000/posts/'+id, {
+        headers:{
+          Authorization: "Bearer "+ this.token
+        }
+      })
+      .then((response) => {
+        console.log(response.data)
+        this.$router.push({path: "/Posts"})
+
+
+      })
+      .catch(error => {
+        console.log(error)
+      })
+
+    }
+  },
 };
 
 </script>

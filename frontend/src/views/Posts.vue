@@ -1,51 +1,51 @@
 <template>
   <v-container>
    <v-card class="mt-0">
-      <v-toolbar  fluid color ="#f73b3b"  dark class="my-4 mt-0">
-       <v-img
-       :src="require('../assets/icon.svg')"
-       class="my-4"
-       contain
-       height="65"
-       />
+    <v-toolbar  fluid color ="#f73b3b"  dark class="my-4 mt-0">
+     <v-img
+     :src="require('../assets/icon.svg')"
+     class="my-4"
+     contain
+     height="65"
+     />
 
-       <v-toolbar-title>Groupomania</v-toolbar-title>
+     <v-toolbar-title>Groupomania</v-toolbar-title>
 
-       <v-spacer></v-spacer>
+     <v-spacer></v-spacer>
 
-       <v-btn icon>
-        <v-icon>mdi-magnify</v-icon>
-      </v-btn>
+     <v-btn icon>
+      <v-icon>mdi-magnify</v-icon>
+    </v-btn>
 
-      <v-btn icon>
-        <v-icon>mdi-account</v-icon>
-      </v-btn>
+    <v-btn @click="$router.push({path:'/profile/'+fk_user})" icon>
+      <v-icon>mdi-account</v-icon>
+    </v-btn>
 
-      <v-btn @click="$router.push({path: '/logout'})" icon>
-        <v-icon>mdi-logout</v-icon>
-      </v-btn>
-    </v-toolbar>
-  </v-card>
+    <v-btn @click="$router.push({path: '/logout'})" icon>
+      <v-icon>mdi-logout</v-icon>
+    </v-btn>
+  </v-toolbar>
+</v-card>
 
-  <v-main >  
+<v-main >  
   <router-link to ="/addPost"><v-text-field label="Partager votre publication"></v-text-field></router-link>   
-    <div class="post" v-for="(post, index) in posts" :key="index" >
+  <div class="post" v-for="(post, index) in posts" :key="index" >
 
-      <v-card  @click="$router.push({ path: '/post/'+post.id})"
+    <v-card  @click="$router.push({ path: '/post/'+post.id})"
 
-      class=" mt-3" >
-      <v-card-text >
-        <h3 class=" font-weight-light"> 
+    class=" mt-3" >
+    <v-card-text >
+      <h3 class=" font-weight-light"> 
 
-        {{post.title}}</h3>
+      {{post.title}}</h3>
 
 
-        <p  class="font-weight-regular">   
-        {{post.content}}</p>
+      <p  class="font-weight-regular">   
+      {{post.content}}</p>
 
-      </v-card-text>
-    </v-card>
-  </div>
+    </v-card-text>
+  </v-card>
+</div>
 </v-main>
 </v-container>
 </template>
@@ -62,38 +62,39 @@ export default {
        type: Object,
        require: true
      },
+     fk_user: localStorage.getItem("userId"),
 
 
-      
+
+   }
+ },
+ mounted (){
+  this.$http.get(`http://localhost:3000/posts`,{
+    headers:{
+      Authorization: "Bearer "+ this.token
     }
-  },
-  mounted (){
-    this.$http.get(`http://localhost:3000/posts`,{
-      headers:{
-        Authorization: "Bearer "+ this.token
-      }
-    })
-    .then(response=> {
-      this.posts=  response.data})
+  })
+  .then(response=> {
+    this.posts=  response.data})
 
 
 
-    .catch((e) => {
-      console.log(e);
-    });
+  .catch((e) => {
+    console.log(e);
+  });
 
 
 
-  },  
+},  
 
-  methods:{
-
-
-    
+methods:{
 
 
-    
-  }   
+
+
+
+
+}   
 
 };
 
