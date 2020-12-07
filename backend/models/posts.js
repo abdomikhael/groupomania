@@ -1,5 +1,3 @@
-/* jshint indent: 2 */
-
 const Sequelize = require('sequelize');
 module.exports = function(sequelize) {
   const Post= sequelize.define('Post', {
@@ -27,10 +25,6 @@ module.exports = function(sequelize) {
       type: Sequelize.TEXT,
       allowNull: false
     },
-    UserId: {
-      type : Sequelize.SMALLINT,
-    }
-    
-  }, {});
+    }, {});
   return Post;
 };

@@ -6,28 +6,22 @@
         <p class="headline">MON PROFILE</p>
       </v-card-title>
       <v-form ref="form">
-       <v-card-text>
-        <v-label="Nom d'utilisateur"       
-        ></v-label>
-        
-        <v-model="currentUser.username"></v-model="currentUser.username">
-
-        <v-text-field
-        v-model="currentUser.email"
-        label="E-mail"
-        ></v-text-field>
-        <v-text-field
-        v-model="currentUser.bio"
-        label="Bio"      
-        ></v-text-field>
+       <v-card-text>  
+        <p >Nom d'utilisateur : {{currentUser.username}}</p>
+        <p >E-mail : {{currentUser.email}}</p>
+        <p>Bio : {{currentUser.bio}}</p>
       </v-card-text>
       <v-card-actions>
        <v-spacer></v-spacer>
-       <v-btn color="error" small class="mr-2" @click="deletePost">
+       <v-btn color="error" class="mr-2" @click="deleteUser">
         Supprimer votre compte
       </v-btn>
-    </v-card-actions>
-  </v-form>
+      <v-btn to="/posts" 
+      color="indigo" dark class="mr-2">
+      Annuler
+    </v-btn>
+  </v-card-actions>
+</v-form>
 </v-card>
 </div>
 </v-container>
@@ -62,5 +56,28 @@ export default {
       console.log(e);
     })
   },
+  methods:{
+
+    deleteUser() {
+
+      let id= localStorage.getItem("userId")
+      this.$http.delete('http://localhost:3000/profile/'+id, {
+        headers:{
+          Authorization: "Bearer "+ this.token
+        }
+      })
+      .then((response) => {
+        console.log(response.data)
+        this.$router.push({path: "/Posts"})
+
+
+      })
+      .catch(error => {
+        console.log(error)
+      })
+
+
+    }
+  }
 };
 </script>

@@ -1,5 +1,3 @@
-/* jshint indent: 2 */
-
 const Sequelize = require('sequelize');
 module.exports = function(sequelize) {
   const User = sequelize.define('User', {
@@ -26,8 +24,6 @@ module.exports = function(sequelize) {
       allowNull: true
     },
   },{});
-  User.associate= function(models){
-    models.User.hasMany(models.Post)
-  };
+ 
   return User;
 };

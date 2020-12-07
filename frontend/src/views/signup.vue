@@ -50,7 +50,7 @@
 				<v-text-field 
 				v-model="users.bio" 
 				name="bio" 
-				label="Bio" 
+				label="Bio*" 
 				type="text"
 				></v-text-field>
 				
@@ -101,7 +101,7 @@ export default {
 			},
 			nameRules: [
 			v => !!v || "Nom d'utilisateur est obligatoire",
-			v => (v && v.length <= 10) || "Nom d'utilisateur doit avoir maximum de 15 character"
+			v => (v && v.length <= 15) || "Nom d'utilisateur doit avoir maximum de 15 character"
 			],
 			emailRules: [
 			v => !!v || 'E-mail est obligatoire',

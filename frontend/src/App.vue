@@ -20,24 +20,25 @@ export default {
 
 		return {
 			layout:`div`,  
-			token: ""  }
-		},
-		created() {
-			this.token =localStorage.getItem("token") || "";
-		},
-		methods:{
-			loggedIn(data){
-
-				this.token = data.token
-				localStorage.setItem("token", data.token);
-				localStorage.setItem("userId", data.userId)
-			},
-			loggedOut(){
-				this.token = ''
-				localStorage.setItem("token", "");
-				localStorage.setItem("userId","")
-
-			}
+			token: ""  
 		}
-	};
-	</script>
+	},
+	created() {
+		this.token =localStorage.getItem("token") || "";
+	},
+	methods:{
+		loggedIn(data){
+			console.log(data)
+			this.token = data.token
+			localStorage.setItem("token", data.token);
+			localStorage.setItem("userId", data.userId)
+		},
+		loggedOut(){
+			this.token = ''
+			localStorage.setItem("token", "");
+			localStorage.setItem("userId","")
+
+		}
+	}
+};
+</script>

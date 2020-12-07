@@ -45,8 +45,7 @@ export default {
 			},
 			showError: false,
 			apiRequest:false,
-			errors :"",
-
+			
 
 		}
 	}, 
@@ -70,7 +69,7 @@ export default {
 				
 			})
 			.catch(e => {
-				this.errors.push(e)
+				console.log(e)
 				this.showError = true 	
 			})
 

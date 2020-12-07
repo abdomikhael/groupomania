@@ -5,8 +5,12 @@
       <v-card-title>
         <p class="headline">Modifier votre publication</p>
       </v-card-title>
-      <v-form ref="form" lazy-validation>
-       <v-card-text>
+      <v-card-text>
+        <v-form
+        ref="form"
+        v-model="valid"
+        lazy-validation>
+
         <v-text-field
         v-model="currentPost.title"
         :rules="[(v) => !!v || 'Titre est obligatoire.']"
@@ -20,18 +24,24 @@
         label="Description"
         required
         ></v-textarea>
-      </v-card-text>
+      </v-form>
+
       <v-card-actions>
        <v-spacer></v-spacer>
        <v-btn color="error" small class="mr-2" @click="deletePost">
         Supprimer
       </v-btn>
-      <v-btn color="success" small @click="updatePost">
+      <v-btn :disabled="!valid" color="success"   small @click="updatePost">
         Modifier
       </v-btn>
-    </v-card-actions>
-  </v-form>
-  <p class="mt-3">{{ message }}</p>  
+      <v-btn to="/posts" small
+      color="indigo" dark>
+      Annuler
+    </v-btn>
+  </v-card-actions>
+</v-card-text>
+
+<p class="mt-3">{{ message }}</p>  
 </v-card>
 </div>
 <div v-else>
@@ -82,6 +92,7 @@ export default {
   },
   methods:{
     updatePost() {
+     if (this.$refs.form.validate()) {
       let  id = this.$route.params.id;
       this.$http.put(`http://localhost:3000/posts/`+id, this.currentPost, {
         headers:{
@@ -97,29 +108,30 @@ export default {
       .catch(
         console.log("error")
         )
-    },
-
-
-    deletePost() {
-
-      let  id = this.$route.params.id;
-      this.$http.delete('http://localhost:3000/posts/'+id, {
-        headers:{
-          Authorization: "Bearer "+ this.token
-        }
-      })
-      .then((response) => {
-        console.log(response.data)
-        this.$router.push({path: "/Posts"})
-
-
-      })
-      .catch(error => {
-        console.log(error)
-      })
-
     }
   },
+
+
+  deletePost() {
+
+    let  id = this.$route.params.id;
+    this.$http.delete('http://localhost:3000/posts/'+id, {
+      headers:{
+        Authorization: "Bearer "+ this.token
+      }
+    })
+    .then((response) => {
+      console.log(response.data)
+      this.$router.push({path: "/Posts"})
+
+
+    })
+    .catch(error => {
+      console.log(error)
+    })
+
+  }
+},
 };
 
 </script>

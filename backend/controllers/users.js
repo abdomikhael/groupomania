@@ -5,16 +5,16 @@ const jwt = require('jsonwebtoken');
 exports.signup = (req, res, next) => {
   bcrypt.hash(req.body.password, 10)
   .then(hash => {
-    const user = models.User.create({
+     models.User.create({
       email: req.body.email,
       username : req.body.username,
       bio : req.body.bio,
       password: hash
     })
-    .then(() => res.status(201).json({ message: 'Utilisateur créé !',
+    .then((user) => res.status(201).json({ message: 'Utilisateur créé !',
        userId: user.id,
         token: jwt.sign(
-          { userId: user._id },
+          { userId: user.id },
           'RANDOM_TOKEN_SECRET'
 
           )
@@ -66,3 +66,11 @@ exports.showProfile = (req, res, next) => {
     });
   });
 };
+exports.deleteProfile =(req, res, next) => {
+   const id = req.params.id;
+    const userObject = req.body;
+ 
+    models.User.deleteOne(id)
+    .then(() => res.status(201).json({ message: 'Profile supprimé !'}))
+  .catch(error => res.status(400).json({ error }));
+}
