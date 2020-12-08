@@ -3,7 +3,7 @@
 
 	class=" mt-3" >
 	<v-card-text >
-			{{user.username}}
+		<p>	Publié par {{user.username}}</p>
 		<h3 class=" font-weight-light"> 
 
 		{{post.title}}</h3>

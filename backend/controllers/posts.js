@@ -43,7 +43,7 @@ exports.createPost = (req, res, next) => {
 };
 
 exports.modifyPost = (req, res, next) => {
-  try {
+
 
 
          models.Post.findOne({
@@ -55,7 +55,6 @@ exports.modifyPost = (req, res, next) => {
          models.Post.update({
             title: req.body.title,
             content: req.body.content,
-            attachment: req.body.attachment
         }, {
             where: {
                 id: (req.params.id)
@@ -65,10 +64,7 @@ exports.modifyPost = (req, res, next) => {
         return res.status(200).send({
             message: "Publication modifiée"
         })
-    } catch (err) {
-        return res.status(500).json(err);
-    }
-
+   
 };
 
 exports.deletePost = (req, res, next) => {
