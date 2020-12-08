@@ -10,12 +10,13 @@ import addPost from '../components/addPost.vue'
 import profile from '../components/profile.vue'
 
 
+
 Vue.use(VueRouter)
 
 
 const routes = [
 {
-  path: '/',
+  path: '/',  
   name: 'Home',
   component: Home
 },

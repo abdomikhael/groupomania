@@ -26,7 +26,7 @@
       required
       ></v-textarea>
     </v-form>
-    
+
     <v-card-actions>
       <v-spacer></v-spacer>
       <v-btn to="/posts" 
@@ -54,18 +54,18 @@ export default {
     return{
 
      postsCard:{
-      fk_user: localStorage.getItem("userId"),
       title : null,
-      content :null
+      content :null,
+      fk_user: localStorage.getItem("userId"),
     },
     message: "",
 
+
   }
 },
-methods:{
+methods:{ 
   sendPost () {
     if (this.$refs.form.validate()) {
-
       console.log(this.posts)
       this.$http.post(`http://localhost:3000/posts`, this.postsCard, {
         headers:{
@@ -84,5 +84,6 @@ methods:{
   },
 }
 };
+
 
 </script>

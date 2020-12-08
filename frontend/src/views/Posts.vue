@@ -17,7 +17,7 @@
       <v-icon>mdi-magnify</v-icon>
     </v-btn>
 
-    <v-btn @click="$router.push({path:'/profile/'+fk_user})" icon>
+    <v-btn  @click="$router.push({path:'/profile/'+fk_user})" icon>
       <v-icon>mdi-account</v-icon>
     </v-btn>
 
@@ -30,29 +30,19 @@
 <v-main >  
   <router-link to ="/addPost"><v-text-field label="Partager votre publication"></v-text-field></router-link>   
   <div class="post" v-for="(post, index) in posts" :key="index" >
-
-    <v-card  @click="$router.push({ path: '/post/'+post.id})"
-
-    class=" mt-3" >
-    <v-card-text >
-      <h3 class=" font-weight-light"> 
-
-      {{post.title}}</h3>
-
-
-      <p  class="font-weight-regular">   
-      {{post.content}}</p>
-
-    </v-card-text>
-  </v-card>
+    <Post :post="post"/>
 </div>
 </v-main>
 </v-container>
 </template>
 <script>
+import Post from '../components/Post.vue'
 
 export default {
   name: 'posts',
+  components: {
+    Post,
+  },
   props:["token"],
 
 

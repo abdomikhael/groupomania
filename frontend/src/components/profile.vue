@@ -68,7 +68,7 @@ export default {
       })
       .then((response) => {
         console.log(response.data)
-        this.$router.push({path: "/Posts"})
+       this.$router.push({path: '/logout'})
 
 
       })

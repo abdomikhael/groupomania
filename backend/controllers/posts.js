@@ -43,32 +43,42 @@ exports.createPost = (req, res, next) => {
 };
 
 exports.modifyPost = (req, res, next) => {
-  const id = req.params.id;
-  const postObject = req.body;
-   delete postObject.createdAt;
-  const post = new models.Post ({
-    ...postObject,
+  try {
 
-  });
-  if (!req.body) {
-    res.status(400).send({
-      message: "Content can not be empty!"
-    }); 
-  }
-  
-  post.update(id)
-  .then(() => res.status(201).json({ message: 'Post enregistré !'}))
-  .catch(error => res.status(400).json({ error }));
-  
+
+         models.Post.findOne({
+            where: {
+                id: (req.params.id)
+            }
+        });
+
+         models.Post.update({
+            title: req.body.title,
+            content: req.body.content,
+            attachment: req.body.attachment
+        }, {
+            where: {
+                id: (req.params.id)
+            }
+        });
+
+        return res.status(200).send({
+            message: "Publication modifiée"
+        })
+    } catch (err) {
+        return res.status(500).json(err);
+    }
+
 };
 
 exports.deletePost = (req, res, next) => {
-    const id = req.params.id;
-    const postObject = req.body;
-    post = models.Post
-    post.deleteOne(id)
+const id = req.params.id;
+  
+ 
+    models.Post.destroy({ where:{ id } })
     .then(() => res.status(201).json({ message: 'Post supprimé !'}))
   .catch(error => res.status(400).json({ error }));
 
+    
 };
 

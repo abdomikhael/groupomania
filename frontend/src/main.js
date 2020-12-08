@@ -9,6 +9,9 @@ import axios from 'axios'
 import Vuelidate from 'vuelidate'
 
 
+
+
+
 Vue.use(Vuelidate)
 Vue.prototype.$http = axios
 Vue.config.productionTip = false

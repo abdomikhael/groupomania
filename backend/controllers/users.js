@@ -68,9 +68,10 @@ exports.showProfile = (req, res, next) => {
 };
 exports.deleteProfile =(req, res, next) => {
    const id = req.params.id;
-    const userObject = req.body;
+  
  
-    models.User.deleteOne(id)
+    models.User.destroy({ where:{ id } })
     .then(() => res.status(201).json({ message: 'Profile supprimé !'}))
   .catch(error => res.status(400).json({ error }));
+
 }

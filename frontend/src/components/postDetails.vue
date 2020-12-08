@@ -26,7 +26,7 @@
         ></v-textarea>
       </v-form>
 
-      <v-card-actions>
+      <v-card-actions v-if ="currentPost.fk_user == currentUser">
        <v-spacer></v-spacer>
        <v-btn color="error" small class="mr-2" @click="deletePost">
         Supprimer
@@ -65,13 +65,33 @@ export default {
         required: true,
         fk_user: localStorage.getItem("userId"),
       },
-
+      user:{},
       message: "",
 
 
 
 
     }
+
+  },
+  computed :{
+    currentUser(){
+      return +(localStorage.getItem("userId"))
+    }
+  },
+  created() {
+    this.$http.get(`http://localhost:3000/profile/`+this.currentPost.fk_user,
+    {
+      headers:{
+        Authorization: "Bearer "+ localStorage.getItem("token")
+      }, 
+    })
+    .then((response) => {
+      this.user= response.data;
+    })
+    .catch((e) => {
+      console.log(e);
+    })
 
   },
   mounted() {  
@@ -101,37 +121,40 @@ export default {
       })
       .then(response=> {
         console.log("response")
-        this.currentPostCard = response.data
+        this.currentPost = response.data
         this.message ="le Post est modifié"
-       // this.$router.push({path: "/Posts"})
+        this.$router.push({path: "/Posts"})
      })
-      .catch(
-        console.log("error")
-        )
+      .catch()
+      console.log("error")
+
     }
   },
 
 
-  deletePost() {
 
+
+  deletePost() {
     let  id = this.$route.params.id;
-    this.$http.delete('http://localhost:3000/posts/'+id, {
+
+    this.$http.delete(`http://localhost:3000/posts/`+id,{
+
+
       headers:{
         Authorization: "Bearer "+ this.token
-      }
-    })
-    .then((response) => {
-      console.log(response.data)
+      } 
+    }) 
+
+
+
+    .then(res => {
+      console.log(res)
       this.$router.push({path: "/Posts"})
-
-
-    })
-    .catch(error => {
-      console.log(error)
-    })
+    });
 
   }
-},
+}
 };
+
 
 </script>
