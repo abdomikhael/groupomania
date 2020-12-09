@@ -7,8 +7,8 @@
 <script>
 // @ is an alias to /src
 
-import DefaultLayout from '../Layouts/DefaultLayout.vue'
-import HelloWorld from '../components/HelloWorld.vue'
+import DefaultLayout from '../user/Layouts/DefaultLayout.vue'
+import HelloWorld from '../user/Layouts/HelloWorld.vue'
 
 export default {
 	name: 'Home',

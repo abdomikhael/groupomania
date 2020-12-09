@@ -3,7 +3,7 @@
 		<v-toolbar  fluid color ="#f73b3b"  dark class="my-4 mt-0">
 			
 				<v-img
-				:src="require('../assets/icon.svg')"
+				:src="require('../../../assets/icon.svg')"
 				class="my-4"
 				contain
 				height="65"

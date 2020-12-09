@@ -3,7 +3,7 @@
 		<v-col cols="12">
 			<router-link to="/">
 				<v-img
-				:src="require('../assets/icon.svg')"
+				:src="require('../../assets/icon.svg')"
 				class="my-3"
 				contain
 				height="75"
@@ -75,20 +75,18 @@
 				color="warning"
 				@click="reset"
 				large
-				>Réinitialiser</v-btn>
-
-				
-		</v-card-actions>
-	</v-card-text>	
-</v-card><br>
-<p align="center" >Vous avez un compte? <a href="/login">SE CONNECTER </a></p>
+				>Réinitialiser</v-btn>		
+			</v-card-actions>
+		</v-card-text>	
+	</v-card><br>
+	<p align="center" >Vous avez un compte? <a href="/login">SE CONNECTER </a></p>
 </v-flex>
 </template>
 <script>
-import LoginOrSignupLayout from '../Layouts/LoginOrSignupLayout.vue'
+import LoginOrSignupLayout from '../user/Layouts/LoginOrSignupLayout.vue'
 
 
-export default {
+export default {	
 	
 	data() {
 		return{
@@ -126,8 +124,6 @@ export default {
 			this.$refs.form.reset()
 		},
 		
-
-
 		createAccount () {
 			if (this.$refs.form.validate()) {
 				this.snackbar = true

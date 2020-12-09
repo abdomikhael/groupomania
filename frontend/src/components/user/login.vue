@@ -3,7 +3,7 @@
 		<v-col cols="12">
 			<router-link to ="/">
 				<v-img
-				:src="require('../assets/icon.svg')"
+				:src="require('../../assets/icon.svg')"
 				class="my-3"
 				contain
 				height="75"
@@ -34,7 +34,7 @@
 	</v-flex>
 </template>
 <script>
-import LoginOrSignupLayout from '../Layouts/LoginOrSignupLayout.vue'
+import LoginOrSignupLayout from '../user/Layouts/LoginOrSignupLayout.vue'
 export default {
 	data() {
 		return{

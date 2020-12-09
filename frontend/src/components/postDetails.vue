@@ -76,25 +76,33 @@
 <script>
 export default {
   name: 'postDetails',
-  props:["token","post"],
+  props:["token"],
   data() {
     return {
       currentPost:{
-        type: Boolean,
-        required: true,
-        fk_user: localStorage.getItem("userId"),
-      },
-      user:{},
+         fk_user: localStorage.getItem("userId"),
 
+      },
+      user :{},
+      postUser :{},
       message: "",
+    
     }
   }, 
+
+  computed :{
+    currentUser(){
+      return +(localStorage.getItem("userId"))
+    },
+  },
+
   created() {
 
-    this.$http.get(`http://localhost:3000/profile/`+this.post.fk_user,
+
+    this.$http.get(`http://localhost:3000/profile/`+this.currentPost.fk_user,
     {
       headers:{
-        Authorization: "Bearer "+ localStorage.getItem("token")
+        Authorization: "Bearer "+ localStorage.getItem("userId")
       }, 
     })
     .then((response) => {
@@ -103,17 +111,12 @@ export default {
     .catch((e) => {
       console.log(e);
     })
-  
-  },
+    
 
-  computed :{
-    currentUser(){
-      return +(localStorage.getItem("userId"))
-    },
   },
   mounted() {  
+    let  id = this.$route.params.id;
 
-    let  id= this.$route.params.id;
     this.$http.get(`http://localhost:3000/posts/`+id,
     {
       headers:{
@@ -126,7 +129,8 @@ export default {
     })
     .catch((e) => {
       console.log(e);
-    })
+    });
+
   },
   methods:{
     updatePost() {

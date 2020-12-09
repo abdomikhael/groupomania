@@ -3,10 +3,10 @@
     <v-row class="text-center">
       <v-col cols="12">
         <v-img
-        :src="require('../assets/icon.svg')"
-        class="my-3"
+        :src="require('../../../assets/icon.svg')"
+        class="my-4"
         contain
-        height="200"
+        height="65"
         />
       </v-col>
 
