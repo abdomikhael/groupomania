@@ -6,7 +6,7 @@
         :src="require('../../../assets/icon.svg')"
         class="my-4"
         contain
-        height="65"
+        height="200"
         />
       </v-col>
 

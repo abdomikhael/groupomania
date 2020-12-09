@@ -1,8 +1,6 @@
 <template>
   <v-container fluid  class="mt-15" >
-    <v-card>
-
-
+    <v-card color="#F3E5F5">
       <v-card-title>
        <p class="headline">Ajouter votre publication</p>
      </v-card-title>
@@ -11,7 +9,6 @@
       ref="form"
       v-model="valid"
       lazy-validation>
-
       <v-text-field
       placeholder="Le titre"
       v-model ="postsCard.title"
@@ -23,10 +20,8 @@
       placeholder="La publication"
       v-model ="postsCard.content"
       :rules="[(v) => !!v || 'content est obligatoire']"
-      required
       ></v-textarea>
     </v-form>
-
     <v-card-actions>
       <v-spacer></v-spacer>
       <v-btn to="/posts" 
@@ -40,8 +35,6 @@
   </v-btn>
 </v-card-actions>
 </v-card-text>
-
-
 <p class="mt-3">{{ message }}</p>
 </v-card>
 </v-container>
@@ -52,15 +45,12 @@ export default {
   props:["token"],
   data() {
     return{
-
      postsCard:{
       title : null,
       content :null,
       fk_user: localStorage.getItem("userId"),
     },
     message: "",
-
-
   }
 },
 methods:{ 
@@ -79,11 +69,9 @@ methods:{
       })
       .catch(
         console.log("error")
-        )
+        )     
     }
-  },
+  }
 }
 };
-
-
 </script>

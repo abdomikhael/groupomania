@@ -31,7 +31,7 @@
   <router-link to ="/addPost"><v-text-field label="Partager votre publication"></v-text-field></router-link>   
   <div class="post" v-for="(post, index) in posts" :key="index" >
     <Post :post="post"/>
-</div>
+  </div>
 </v-main>
 </v-container>
 </template>
@@ -77,14 +77,6 @@ export default {
 
 },  
 
-methods:{
-
-
-
-
-
-
-}   
 
 };
 

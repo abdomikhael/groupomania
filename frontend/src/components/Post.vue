@@ -1,5 +1,5 @@
 <template>
-	<v-card @click="$router.push({ path: '/post/'+post.id})"
+	<v-card  color="#F3E5F5" @click="$router.push({ path: '/post/'+post.id})"
 
 	class=" mt-3" >
 	<v-card-text >

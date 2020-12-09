@@ -1,7 +1,7 @@
 <template>
   <v-container fluid  class="mt-15" >   
     <div v-if ="currentPost.fk_user == currentUser" class="edit-form py-3">
-      <v-card>
+      <v-card color="#F3E5F5">
         <v-card-title>   
           <p class="headline">Modifier votre publication</p>
         </v-card-title>
@@ -50,7 +50,7 @@
 </div>
 <div v-else class="edit-form py-3" >
 
-  <v-card>
+  <v-card color="#F3E5F5">
     <v-card-title>   
       <p class="headline">La publication</p>
     </v-card-title>
@@ -86,7 +86,7 @@ export default {
       user :{},
       postUser :{},
       message: "",
-    
+
     }
   }, 
 
@@ -111,7 +111,7 @@ export default {
     .catch((e) => {
       console.log(e);
     })
-    
+
 
   },
   mounted() {  
