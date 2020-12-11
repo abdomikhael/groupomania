@@ -2,7 +2,10 @@
 	const fs = require('fs');
 	exports.getAllPosts = (req, res, next) => {
 		models.Post.findAll({
+			order: [
+			['id', 'DESC'],
 			
+			]
 			
 		})
 		.then((post) => {
