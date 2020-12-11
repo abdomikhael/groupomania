@@ -15,7 +15,6 @@
 				<v-toolbar-title>Créer un compte Groupomania</v-toolbar-title>
 			</v-toolbar>
 			<v-progress-linear v-if ="apiRequest" :indeterminate="true"></v-progress-linear>
-
 			<v-card-text>
 				<v-form
 				ref="form"
@@ -28,7 +27,6 @@
 				:counter="15"
 				label="Nom d'utilisateur*" 
 				type="text"
-
 				></v-text-field>
 				<v-text-field  
 				v-model ="users.email" 
@@ -52,15 +50,14 @@
 				name="bio" 
 				label="Bio*" 
 				type="text"
+				required
+				:rules="bioRules"
 				></v-text-field>
-				
 				<v-checkbox
 				v-model="userAgreement"
 				label="j'accepte les régles"
 				required
 				:rules="[(v) => !!v || 'La case doit être couchéé']"
-
-
 				></v-checkbox>
 			</v-form>
 			<v-card-actions>
@@ -70,7 +67,6 @@
 				:disabled="!valid" 
 				@click="createAccount"
 				>s'inscrire</v-btn>
-
 				<v-btn
 				color="warning"
 				@click="reset"
@@ -84,10 +80,7 @@
 </template>
 <script>
 import LoginOrSignupLayout from '../user/Layouts/LoginOrSignupLayout.vue'
-
-
 export default {	
-	
 	data() {
 		return{
 			valid: true,
@@ -109,7 +102,9 @@ export default {
 			v => !!v || 'Mot de passe est obligatoire',
 			v => (v && v.length >= 10) || 'Mot de passe doit avoir au minimum 10 character'
 			],
-
+			bioRules: [
+			v => !!v || 'bio est obligatoire',
+			],
 			userAgreement : false,
 			apiRequest:false,
 			errors :"",
@@ -118,27 +113,22 @@ export default {
 	created() {
 		this.$emit(`update:layout`, LoginOrSignupLayout)
 	},
-
 	methods:{
 		reset () {
 			this.$refs.form.reset()
 		},
-		
 		createAccount () {
 			if (this.$refs.form.validate()) {
 				this.snackbar = true
 				this.apiRequest=true
 				this.$http.post(`http://localhost:3000/signup/`,  this.users)
 				.then(response => {
-
 					this.$emit("login", response.data)
 					this.apiRequest=false;
 					this.$router.push({path: "/Posts", query: this.email})
-
 				})
 			}
 		}
 	}
 };
-
 </script>

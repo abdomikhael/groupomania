@@ -5,19 +5,12 @@
 		</components>
 	</v-app>
 </template>
-
 <script>
-
 export default {
 	name: 'app',
-
 	components: {
-
-
 	},
-
 	data() {
-
 		return {
 			layout:`div`,  
 			token: ""  
@@ -37,7 +30,6 @@ export default {
 			this.token = ''
 			localStorage.setItem("token", "");
 			localStorage.setItem("userId","")
-
 		}
 	}
 };

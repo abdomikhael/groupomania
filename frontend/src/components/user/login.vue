@@ -21,7 +21,6 @@
 					<v-text-field v-model="user.password" id="password" name="password" label="Mot de passe" type="password"></v-text-field>
 				</v-form>
 			</v-card-text>
-
 			<v-card-actions>
 				<v-spacer></v-spacer>
 				<v-btn color="#f73b3b" dark large @click= "loginUser">se connecter</v-btn>
@@ -41,24 +40,16 @@ export default {
 			user :{
 				email: this.$route.query.email,
 				password : '',
-
 			},
 			showError: false,
 			apiRequest:false,
-			
-
 		}
 	}, 
-	
-
-
 	created(){
 		this.$emit(`update:layout`, LoginOrSignupLayout)
-
 	},
 	methods:{
 		loginUser() {
-
 			this.apiRequest=true;
 			this.$http.post(`http://localhost:3000/login/`,  this.user)
 			.then(response => {
@@ -66,22 +57,12 @@ export default {
 				console.log(response.data)
 				this.$emit ("login", response.data)
 				this.$router.push({path :"/posts"})
-				
 			})
 			.catch(e => {
 				console.log(e)
 				this.showError = true 	
 			})
-
-			
-
-
-			
 		},
-
-
-
-		
 	}
 };
 </script>

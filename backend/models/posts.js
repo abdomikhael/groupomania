@@ -6,7 +6,6 @@ module.exports = function(sequelize) {
       type: Sequelize.SMALLINT,
       allowNull: false,
       primaryKey: true,
-   
     },
     fk_user: {
       type: Sequelize.SMALLINT,
@@ -16,7 +15,6 @@ module.exports = function(sequelize) {
         key: 'id'
       }
     },
-   
     title: {
       type: Sequelize.STRING(255),
       allowNull: false
@@ -25,6 +23,6 @@ module.exports = function(sequelize) {
       type: Sequelize.TEXT,
       allowNull: false
     },
-    }, {});
+  }, {});
   return Post;
 };

@@ -7,18 +7,12 @@ import '@mdi/font/css/materialdesignicons.css'
 import 'material-design-icons-iconfont'
 import axios from 'axios'
 import Vuelidate from 'vuelidate'
-
-
-
-
-
 Vue.use(Vuelidate)
 Vue.prototype.$http = axios
 Vue.config.productionTip = false
 Vue.use(vuetify);
-
 new Vue({
-  router,
-  vuetify,
-  render: h => h(App)
+	router,
+	vuetify,
+	render: h => h(App)
 }).$mount('#app')

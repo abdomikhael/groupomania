@@ -8,12 +8,7 @@ import Logout from '../components//user/logOut.vue'
 import postDetails from '../components/postDetails.vue'
 import addPost from '../components/addPost.vue'
 import profile from '../components/profile.vue'
-
-
-
 Vue.use(VueRouter)
-
-
 const routes = [
 {
   path: '/',  
@@ -35,7 +30,6 @@ const routes = [
   name: 'posts',
   component: posts,
   props : true,
-
 },
 {
   path: '/addpost',
@@ -46,35 +40,20 @@ const routes = [
   path: '/logout',
   name: 'logout',
   component: Logout,
-
 },
 { 
-  
   path: '/post/:id',
   name: 'postDetails',
   component :postDetails
-   
 },
 {
   path: '/profile/:id',
   name: 'profile',
   component :profile
 },
-
-
 ]
-
-
-
-
-
-
-
 const router = new VueRouter({
   routes,
   mode :'history',
-
-
 })
-
 export default router

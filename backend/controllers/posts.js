@@ -1,7 +1,10 @@
 	const models = require('../models');
 	const fs = require('fs');
 	exports.getAllPosts = (req, res, next) => {
-		models.Post.findAll({})
+		models.Post.findAll({
+			
+			
+		})
 		.then((post) => {
 			res.status(200).json(post)
 		})
