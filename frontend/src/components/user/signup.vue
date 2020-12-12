@@ -90,6 +90,7 @@ export default {
 				bio : null,
 				password : null,
 			},
+			// les régles de validation de fromulaire de l'inscription 
 			nameRules: [
 			v => !!v || "Nom d'utilisateur est obligatoire",
 			v => (v && v.length <= 15) || "Nom d'utilisateur doit avoir maximum de 15 character"
@@ -111,12 +112,14 @@ export default {
 		}
 	},
 	created() {
+		// utilisation de Layout de formulaire 
 		this.$emit(`update:layout`, LoginOrSignupLayout)
 	},
 	methods:{
 		reset () {
 			this.$refs.form.reset()
 		},
+		// aprés la validation requete post pour s'inscrire
 		createAccount () {
 			if (this.$refs.form.validate()) {
 				this.snackbar = true

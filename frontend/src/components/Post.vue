@@ -23,6 +23,7 @@ export default {
 		}
 	},
 	mounted() {
+		//affichage de l'écrivan de ce post 
 		if(!this.post){
 			return
 		}
@@ -34,7 +35,6 @@ export default {
 		})
 		.then((response) => {
 			this.user= response.data;
-			console.log(this.user);
 		})
 		.catch((e) => {
 			console.log(e);

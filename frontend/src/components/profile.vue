@@ -37,6 +37,7 @@ export default {
 			fk_user: localStorage.getItem("userId"),
 		}
 	},
+	//affichage de profile de l'Utilisateur
 	mounted() {  
 		let  id= localStorage.getItem("userId")
 		this.$http.get(`http://localhost:3000/profile/`+id,
@@ -47,12 +48,12 @@ export default {
 		})
 		.then((response) => {
 			this.currentUser= response.data;
-			console.log(response.data);
 		})
 		.catch((e) => {
 			console.log(e);
 		})
 	},
+	//supprimer le profil de l'Utilisateur
 	methods:{
 		deleteUser() {
 			let id= localStorage.getItem("userId")

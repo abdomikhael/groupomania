@@ -47,6 +47,7 @@ export default {
 			fk_user: localStorage.getItem("userId"),
 		}
 	},
+	//affichage de tout les postes 
 	mounted (){
 		this.$http.get(`http://localhost:3000/posts`,{
 			headers:{

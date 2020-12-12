@@ -1,12 +1,11 @@
 	const models = require('../models');
 	const fs = require('fs');
+	// fonctionnalités de l'affichage des postes en ordre DESC
 	exports.getAllPosts = (req, res, next) => {
 		models.Post.findAll({
 			order: [
 			['id', 'DESC'],
-			
 			]
-			
 		})
 		.then((post) => {
 			res.status(200).json(post)
@@ -18,6 +17,7 @@
 				});
 			});
 	};
+	// fonctionnalités de l'affichage de post 
 	exports.getOnePost = (req, res, next) => {
 		const id = req.params.id;
 		models.Post.findByPk(id)
@@ -30,6 +30,7 @@
 				});
 			});
 	};
+	// fonctionnalités de créé de post
 	exports.createPost = (req, res, next) => {
 		const postObject = req.body;
 		const post = new models.Post ({
@@ -39,6 +40,7 @@
 		.then(() => res.status(201).json({ message: 'Post enregistré !'}))
 		.catch(error => res.status(400).json({ error }));
 	};
+	// fonctionnalités pour modifier le post
 	exports.modifyPost = (req, res, next) => {
 		models.Post.findOne({
 			where: {
@@ -57,6 +59,7 @@
 			message: "Publication modifiée"
 		})
 	};
+	// fonctionnalités de supprimer de post
 	exports.deletePost = (req, res, next) => {
 		const id = req.params.id;
 		models.Post.destroy({ where:{ id } })

@@ -1,6 +1,7 @@
 const models = require('../models');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+// fonctionnalités de s'inscrire 
 exports.signup = (req, res, next) => {
   bcrypt.hash(req.body.password, 10)
   .then(hash => {
@@ -11,6 +12,7 @@ exports.signup = (req, res, next) => {
     password: hash
   })
    .then((user) => res.status(201).json({ message: 'Utilisateur créé !',
+    // sign in (se connecter)
      userId: user.id,
      token: jwt.sign(
       { userId: user.id },
@@ -21,6 +23,7 @@ exports.signup = (req, res, next) => {
  })
   .catch(error => res.status(500).json({ error }));
 };
+// fonctionnalités de se connecter et puis se connecter
 exports.login = (req, res, next) => {
   const user = models.User.findOne({ where: { email: req.body.email }})
   .then(user => {
@@ -44,6 +47,7 @@ exports.login = (req, res, next) => {
   })
   .catch(error => res.status(500).json({ error }));
 };
+// fonctionnalités de l'affichage de profile
 exports.showProfile = (req, res, next) => {
  const id = req.params.id;
  models.User.findByPk(id)
@@ -56,6 +60,7 @@ exports.showProfile = (req, res, next) => {
     });
   });
 };
+// fonctionnalités de supprimer de profile
 exports.deleteProfile =(req, res, next) => {
  const id = req.params.id;
  models.User.destroy({ where:{ id } })

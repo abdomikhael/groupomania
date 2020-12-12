@@ -49,6 +49,7 @@ export default {
 		this.$emit(`update:layout`, LoginOrSignupLayout)
 	},
 	methods:{
+		// requet et fonctionnalités post pour se connecter
 		loginUser() {
 			this.apiRequest=true;
 			this.$http.post(`http://localhost:3000/login/`,  this.user)

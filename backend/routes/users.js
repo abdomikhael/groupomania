@@ -11,6 +11,8 @@ const userCtrl = require('../controllers/users');
 router.post('/signup', userCtrl.signup);
 //signin function
 router.post('/login', userCtrl.login);
+// affichage de profile
 router.get('/profile/:id', userCtrl.showProfile);
+//supprimer le profile
 router.delete('/profile/:id', userCtrl.deleteProfile);
 module.exports = router;
