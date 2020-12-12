@@ -71,7 +71,7 @@ export default {
 	data() {
 		return {
 			currentPost:{
-				fk_user: localStorage.getItem("userId"),
+				
 			},
 			user :{},
 			message: "",
@@ -83,21 +83,7 @@ export default {
 		},
 	},
 	created() {
-		this.$http.get(`http://localhost:3000/profile/`+this.currentPost.fk_user,
-		{
-			headers:{
-				Authorization: "Bearer "+ localStorage.getItem("userId")
-			}, 
-		})
-		.then((response) => {
-			this.user= response.data;
-			console.log(response.data)
-		})
-		.catch((e) => {
-			console.log(e);
-		})
-	},
-	mounted() {  
+		
 		let  id = this.$route.params.id;
 		this.$http.get(`http://localhost:3000/posts/`+id,
 		{
@@ -107,6 +93,21 @@ export default {
 		})
 		.then((response) => { 
 			this.currentPost= response.data;
+			console.log(this.currentPost)
+			this.$http.get(`http://localhost:3000/profile/`+this.currentPost.fk_user,
+			{
+				headers:{
+					Authorization: "Bearer "+ localStorage.getItem("userId")
+				}, 
+			})
+			.then((response) => {
+				this.user= response.data;
+				console.log(response.data)
+			})
+			.catch((e) => {
+				console.log(e);
+			})
+
 		})
 		.catch((e) => {
 			console.log(e);
