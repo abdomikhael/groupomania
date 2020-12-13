@@ -1,30 +1,32 @@
 <template>
 	<v-container fluid  class="mt-15" >
 		<div class="edit-form py-3" >
-			<v-card color="#F3E5F5">
-				<v-card-title>
-					<p class="headline">MON PROFILE</p>
-				</v-card-title>
-				<v-form ref="form">
-					<v-card-text>  
-						<p >Nom d'utilisateur : {{currentUser.username}}</p>
-						<p >E-mail : {{currentUser.email}}</p>
-						<p>Bio : {{currentUser.bio}}</p>
-					</v-card-text>
-					<v-card-actions>
-						<v-spacer></v-spacer>
-						<v-btn color="error" class="mr-2" @click="deleteUser">
-							Supprimer votre compte
+			<v-layout align-center justify-center>
+				<v-card color="#F3E5F5">
+					<v-card-title>
+						<p class="headline">MON PROFILE</p>
+					</v-card-title>
+					<v-form ref="form">
+						<v-card-text>  
+							<p >Nom d'utilisateur : {{currentUser.username}}</p>
+							<p >E-mail : {{currentUser.email}}</p>
+							<p>Bio : {{currentUser.bio}}</p>
+						</v-card-text>
+						<v-card-actions>
+							<v-spacer></v-spacer>
+							<v-btn color="error" class="mr-2" @click="deleteUser">
+								Supprimer votre compte
+							</v-btn>
+							<v-btn to="/posts" 
+							color="indigo" dark class="mr-2">
+							Annuler
 						</v-btn>
-						<v-btn to="/posts" 
-						color="indigo" dark class="mr-2">
-						Annuler
-					</v-btn>
-				</v-card-actions>
-			</v-form>
-		</v-card>
-	</div>
-</v-container>
+					</v-card-actions>
+				</v-form>
+			</v-card>
+		</v-layout>
+		</div>
+	</v-container>
 </template>
 <script>
 export default {
